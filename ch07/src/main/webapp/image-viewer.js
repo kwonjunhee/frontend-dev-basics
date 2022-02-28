@@ -1,0 +1,6 @@
+var imageViewer = {
+	init:function() {
+		
+	}
+	
+}

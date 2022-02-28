@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>sample1</title>
+<link href='image-viewer.css' type='text/css' rel="stylesheet"/>
+<script type="text/javascript" src="./jquery/jquery-3.6.0.js"></script>
+<!-- <script type="text/javascript" src="image-viewer.js"></script> -->
+<script>
+//imageViewer.init();
+
+/*
+ 1. 이미지를 click 했을때도 이미지가 랜덤하게 바뀜
+ 2. 슬라이드 쇼 -> setInterval 사용
+ 	- 버튼이 슬라이드쇼 중지로 바뀌기
+ 	- 3초 간격으로 이미지가 랜덤하게 바뀌게
+ 	- 버튼을 누르면 슬라이드 쇼 중지
+ 	- 버튼을 누르면 슬라이드쇼 시작 바뀌기
+ 3. imageViewer object (image-viewer.js)로 캡슐화 시키기
+ */
+var images = [{
+	name: "국화", 
+	file: "Chrysanthemum.jpg"
+},{  name: "사막", 
+	file: "Desert.jpg"
+},{ name: "수국", 
+	file: "Hydrangeas.jpg"
+},{ name: "해파리", 
+	file: "Jellyfish.jpg"
+},{ name: "코알라", 
+	file: "Koala.jpg"
+},{ name: "등대", 
+	file: "Lighthouse.jpg"
+},{ name: "펭귄", 
+	file: "Penguins.jpg"
+},{ name: "툴립", 
+	file: "Tulips.jpg"
+}];
+
+// 이미지 변경
+var changeImage = function() {
+	var index = Math.floor(Math.random() * images.length);
+	
+	$(".image-viewer img").attr({
+		alt: images[index].name,
+		src: 'images/' + images[index].file
+	});
+}
+// 클릭했을때 이미지 변경됨
+$(function(){
+	$('#btn-change').click(changeImage);
+	changeImage();
+});
+
+// 슬라이드쇼
+var startSlide = function() {
+	setInterval(function() {
+		var index = Math.floor(Math.random() * images.length);
+		$(".image-viewer img").attr({
+			alt: images[index].name,
+			src: 'images/' + images[index].file
+		});
+	}, 1000);
+}
+
+
+// 슬라이드쇼 시작
+
+$(function(){
+	$('#btn-slideshow')
+		.click(function() {
+			startSlide();
+			$('#btn-slideshow').text("슬라이드쇼 중지");
+			$('#btn-slideshow').toggleClass(clearInterval(startSlide()));
+		});
+	
+});
+//슬라이드쇼 중지
+
+
+</script>
+</head>
+<body>
+	<div class="image-viewer">
+		<div class="buttons">
+			<button id="btn-change">이미지변경</button>
+			<button id="btn-slideshow">슬라이드쇼 시작</button>
+		</div>
+		<div>
+			<img/>
+		</div>
+	</div>
+</body>
+</html>
